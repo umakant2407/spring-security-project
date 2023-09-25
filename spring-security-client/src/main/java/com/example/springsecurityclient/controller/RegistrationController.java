@@ -1,7 +1,9 @@
 package com.example.springsecurityclient.controller;
 
+import com.example.springsecurityclient.dto.ResponseDTO;
 import com.example.springsecurityclient.dto.UserRequestDTO;
 import com.example.springsecurityclient.dto.UserResponseDTO;
+import com.example.springsecurityclient.errors.BadRequestException;
 import com.example.springsecurityclient.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,9 +19,9 @@ public class RegistrationController {
   private UserService userService;
 
   @PostMapping("user")
-  UserResponseDTO registerUser(@RequestBody UserRequestDTO requestDTO) {
+  ResponseDTO<UserResponseDTO> registerUser(@RequestBody UserRequestDTO requestDTO) throws BadRequestException {
     UserResponseDTO user = userService.register(requestDTO);
 
-    return user;
+    return new ResponseDTO<>(user);
   }
 }
